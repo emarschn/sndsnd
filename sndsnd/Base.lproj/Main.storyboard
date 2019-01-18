@@ -32,13 +32,6 @@
                                     <action selector="rec:" destination="ICQ-Xf-c6Z" eventType="touchUpInside" id="gou-OU-Xpa"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Kw8-bn-AcI">
-                                <rect key="frame" x="169" y="164" width="37" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="6Pw-za-3kR"/>
-                                    <constraint firstAttribute="width" constant="37" id="Cub-LN-mW2"/>
-                                </constraints>
-                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erA-rM-dSF">
                                 <rect key="frame" x="317" y="601.5" width="23" height="21"/>
                                 <constraints>
@@ -49,22 +42,46 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CNH-da-7Sx">
+                                <rect key="frame" x="0.0" y="205.5" width="375" height="256"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7e-jE-Hnd" customClass="WaveformView" customModule="sndsnd" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="xe6-dN-5QG"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95a-va-QlE" customClass="WaveformView" customModule="sndsnd" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="128" width="375" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="ecj-ps-E8H"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="256" id="LqY-KK-k8V"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="erA-rM-dSF" secondAttribute="trailing" constant="19" id="3Nj-YS-knx"/>
+                            <constraint firstAttribute="trailing" secondItem="CNH-da-7Sx" secondAttribute="trailing" id="5g0-Bt-dGr"/>
                             <constraint firstItem="erA-rM-dSF" firstAttribute="centerY" secondItem="yXz-Ju-ANY" secondAttribute="centerY" id="AYV-UU-8wO"/>
-                            <constraint firstItem="Kw8-bn-AcI" firstAttribute="centerX" secondItem="WBj-on-oXu" secondAttribute="centerX" id="BgK-bN-lfn"/>
+                            <constraint firstItem="CNH-da-7Sx" firstAttribute="leading" secondItem="WBj-on-oXu" secondAttribute="leading" id="HdZ-IE-zEP"/>
                             <constraint firstItem="iLr-35-dik" firstAttribute="top" secondItem="yXz-Ju-ANY" secondAttribute="bottom" constant="40" id="Hgo-js-9hI"/>
-                            <constraint firstItem="Kw8-bn-AcI" firstAttribute="top" secondItem="BD0-qP-CBk" secondAttribute="bottom" constant="100" id="HyL-bi-ATv"/>
                             <constraint firstItem="yXz-Ju-ANY" firstAttribute="centerX" secondItem="WBj-on-oXu" secondAttribute="centerX" id="Yvk-Ej-ryn"/>
+                            <constraint firstItem="CNH-da-7Sx" firstAttribute="centerY" secondItem="WBj-on-oXu" secondAttribute="centerY" id="wby-0T-Pno"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="V5C-uQ-uyh"/>
                     <connections>
-                        <outlet property="indicatorView" destination="Kw8-bn-AcI" id="EWG-Cj-9fb"/>
-                        <outlet property="mic" destination="erA-rM-dSF" id="c8D-In-unH"/>
-                        <outlet property="rec" destination="yXz-Ju-ANY" id="VcL-1i-7V9"/>
+                        <outlet property="inputLabel" destination="erA-rM-dSF" id="c8D-In-unH"/>
+                        <outlet property="startButton" destination="yXz-Ju-ANY" id="VcL-1i-7V9"/>
+                        <outlet property="wave0" destination="L7e-jE-Hnd" id="mGz-TL-y3I"/>
+                        <outlet property="wave1" destination="95a-va-QlE" id="hxC-VJ-mX2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQs-O4-pv5" sceneMemberID="firstResponder"/>
