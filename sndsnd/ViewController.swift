@@ -16,6 +16,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var wave0: WaveformView!
     @IBOutlet weak var wave1: WaveformView!
+
+    @IBOutlet weak var channelsLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var inputLabel: UILabel!
 
@@ -66,6 +68,7 @@ class ViewController: UIViewController {
 
     func setupView() {
         self.inputLabel.text = ""
+        self.channelsLabel.text = ""
 
         let routePickerView = AVRoutePickerView(frame: .init(x: 0, y: 0, width: 40, height: 40))
         let but = UIBarButtonItem.init(customView: routePickerView)
@@ -86,15 +89,12 @@ class ViewController: UIViewController {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, policy: .default, options: options)
         try! AVAudioSession.sharedInstance().setActive(true)
 
-        /*let format = AVAudioFormat(commonFormat: AVAudioCommonFormat.pcmFormatInt16,
-         sampleRate: 44100.0,
-         channels: 1,
-         interleaved: true)*/
-
         let sampleRate = AVAudioSession.sharedInstance().sampleRate
 
         let inputNode = self.audioEngine.inputNode
         let inFormat = inputNode.inputFormat(forBus: 0)
+
+        self.channelsLabel.text = "Channels: \(inFormat.channelCount)"
 
         self.audioEngine.connect(inputNode, to: self.mixer, format: inFormat)
         self.audioEngine.connect(self.mixer, to: self.audioEngine.mainMixerNode, format: inFormat)
@@ -108,8 +108,6 @@ class ViewController: UIViewController {
 
         self.mixer.installTap(onBus: 0, bufferSize: AVAudioFrameCount(sampleRate * 0.4), format: inFormat, block: { (buffer: AVAudioPCMBuffer!, time: AVAudioTime!) -> Void in
 
-            //let audioBuffer : AVAudioBuffer = buffer
-            //_ = ExtAudioFileWrite(self.outref!, buffer.frameLength, audioBuffer.audioBufferList)
         })
 
         try! self.audioEngine.start()
@@ -120,6 +118,8 @@ class ViewController: UIViewController {
     }
 
     func stopPassThru() {
+        self.inputLabel.text = ""
+        self.channelsLabel.text = ""
         self.recording = false
         self.audioEngine.stop()
         self.mixer.removeTap(onBus: 0)
@@ -172,13 +172,13 @@ class ViewController: UIViewController {
         let route = AVAudioSession.sharedInstance().currentRoute
         for port in route.inputs {
             if port.portType == AVAudioSession.Port.lineIn {
-                inputLabel.text = "✅"
+                inputLabel.text = "Line-In"
                 inputLabel.isHidden = false
             } else if port.portType == AVAudioSession.Port.headsetMic {
-                inputLabel.text = "🎧"
+                inputLabel.text = "Headset Mic"
                 inputLabel.isHidden = false
             } else if port.portType == AVAudioSession.Port.builtInMic {
-                inputLabel.text = "📱"
+                inputLabel.text = "Device"
                 inputLabel.isHidden = false
             }
         }
