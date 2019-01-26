@@ -100,10 +100,7 @@ class ViewController: UIViewController {
         self.audioEngine.connect(self.mixer, to: self.audioEngine.mainMixerNode, format: inFormat)
 
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: inFormat) {[weak self] (buffer:AVAudioPCMBuffer, when:AVAudioTime) in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.audioMetering(buffer: buffer)
+            self?.audioMetering(buffer: buffer)
         }
 
         self.mixer.installTap(onBus: 0, bufferSize: AVAudioFrameCount(sampleRate * 0.4), format: inFormat, block: { (buffer: AVAudioPCMBuffer!, time: AVAudioTime!) -> Void in
@@ -121,6 +118,7 @@ class ViewController: UIViewController {
         self.inputLabel.text = ""
         self.channelsLabel.text = ""
         self.recording = false
+        self.audioEngine.inputNode.removeTap(onBus: 0)
         self.audioEngine.stop()
         self.mixer.removeTap(onBus: 0)
         try! AVAudioSession.sharedInstance().setActive(false)
